@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * Copyright (C), 2006-2010, ChengDu ybya info. Co., Ltd.
@@ -16,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("com.video.dao")
+@EnableDiscoveryClient
 public class VideoApplication {
     private final static Logger logger = LoggerFactory.getLogger(VideoApplication.class);
 
