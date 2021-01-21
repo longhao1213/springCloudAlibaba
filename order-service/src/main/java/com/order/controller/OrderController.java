@@ -33,6 +33,8 @@ public class OrderController {
     @Autowired
     private VideoService videoService;
 
+    int count = 0;
+
     @RequestMapping("/save")
     public Object save(int videoId) {
 //        Video video = restTemplate.getForObject("http://localhost:9000/api/v1/video/find_by_id?videoId=" + videoId, Video.class);
@@ -47,6 +49,12 @@ public class OrderController {
 
     @RequestMapping("list")
     public Object list() {
+
+        count++;
+        if (count % 3 == 0) {
+            throw new RuntimeException();
+        }
+
         Map<String, String> map = new HashMap<>();
         map.put("名字", "longsan");
         map.put("age", "22");
