@@ -2,6 +2,7 @@ package com.order.controller;
 
 import com.domain.Video;
 import com.domain.VideoOrder;
+import com.order.service.VideoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,13 @@ public class OrderController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private VideoService videoService;
+
     @RequestMapping("/save")
     public Object save(int videoId) {
-        Video video = restTemplate.getForObject("http://localhost:9000/api/v1/video/find_by_id?videoId=" + videoId, Video.class);
+//        Video video = restTemplate.getForObject("http://localhost:9000/api/v1/video/find_by_id?videoId=" + videoId, Video.class);
+        Video video = videoService.findById(videoId);
 
         VideoOrder videoOrder = new VideoOrder();
         videoOrder.setVideoId(video.getId());

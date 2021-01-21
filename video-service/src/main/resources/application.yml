@@ -12,6 +12,11 @@ spring:
     nacos:
       discovery:
         server-addr: longsan:8848
+    sentinel:
+      transport:
+        dashboard: longsan:8080
+        port: 8101 # 这个端口是用来此服务和sentinel（dashboard）通信使用的
+#        clientIp: 182.148.4.116
 # 控制台输出sql、下划线转驼峰
 mybatis:
   configuration:
