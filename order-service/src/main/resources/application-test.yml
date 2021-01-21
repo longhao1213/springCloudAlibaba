@@ -12,10 +12,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: longsan:8848
+        server-addr: 127.0.0.1:8848
     sentinel:
       transport:
-        dashboard: longsan:8080
+        dashboard: 127.0.0.1:8080
         port: 8100 # 这个端口是用来此服务和sentinel（dashboard）通信使用的
 #        clientIp: dev.ybyian.com
 
