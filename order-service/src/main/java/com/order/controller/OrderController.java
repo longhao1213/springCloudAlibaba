@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Copyright (C), 2006-2010, ChengDu ybya info. Co., Ltd.
@@ -41,5 +43,13 @@ public class OrderController {
         videoOrder.setVideoTitle(video.getTitle());
         videoOrder.setCreateTime(new Date());
         return videoOrder;
+    }
+
+    @RequestMapping("list")
+    public Object list() {
+        Map<String, String> map = new HashMap<>();
+        map.put("名字", "longsan");
+        map.put("age", "22");
+        return map;
     }
 }
