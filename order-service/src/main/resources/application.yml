@@ -24,3 +24,8 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true

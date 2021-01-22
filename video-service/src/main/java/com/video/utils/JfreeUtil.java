@@ -148,7 +148,7 @@ public class JfreeUtil {
         customBarRenderer.setBarPainter( new StandardBarPainter() );
         customBarRenderer.setItemMargin(-0.01);
         //设置柱子的颜色
-        Color c=new Color(0,97,183);
+        Color c=new Color(156, 73, 160);
         customBarRenderer.setSeriesPaint(0, c);
         //设置柱子宽度 单位为占用图片的百分比
         customBarRenderer.setMaximumBarWidth(0.015);
