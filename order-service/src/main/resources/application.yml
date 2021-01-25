@@ -4,7 +4,7 @@ spring:
   application:
     name: order-service
   zipkin:
-    base-url: longsan:9411/
+    base-url: http://longsan:9411/
     discovery-client-enabled: false
   sleuth:
     sampler:
