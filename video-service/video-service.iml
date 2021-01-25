@@ -189,6 +189,7 @@
     <orderEntry type="library" name="Maven: io.zipkin.reporter2:zipkin-sender-kafka:2.15.0" level="project" />
     <orderEntry type="library" name="Maven: io.zipkin.reporter2:zipkin-sender-activemq-client:2.15.0" level="project" />
     <orderEntry type="library" name="Maven: io.zipkin.reporter2:zipkin-sender-amqp-client:2.15.0" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.16" level="project" />
   </component>
 </module>

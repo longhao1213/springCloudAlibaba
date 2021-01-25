@@ -1,6 +1,5 @@
 package com.order;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
  * @Date 2021/01/18 18:42
  */
 @SpringBootApplication
-@MapperScan("com.order.dao")
 @EnableDiscoveryClient
 @EnableFeignClients
 public class OrderApplication {

@@ -6,6 +6,8 @@ import com.order.service.VideoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @version 1.0.0
  * @Date 2021/01/19 16:00
  */
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/order")
 public class OrderController {
@@ -32,6 +35,9 @@ public class OrderController {
 
     @Autowired
     private VideoService videoService;
+
+    @Value("${video.title}")
+    private String videoTitle;
 
     int count = 0;
 
@@ -56,7 +62,7 @@ public class OrderController {
 //        }
 
         Map<String, String> map = new HashMap<>();
-        map.put("名字", "longsan");
+        map.put("名字", videoTitle);
         map.put("age", "22");
         return map;
     }
