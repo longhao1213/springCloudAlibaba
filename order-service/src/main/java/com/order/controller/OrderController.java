@@ -51,9 +51,9 @@ public class OrderController {
     public Object list() {
 
         count++;
-        if (count % 3 == 0) {
-            throw new RuntimeException();
-        }
+//        if (count % 3 == 0) {
+//            throw new RuntimeException();
+//        }
 
         Map<String, String> map = new HashMap<>();
         map.put("名字", "longsan");

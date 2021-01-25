@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: order-service
+  zipkin:
+    base-url: longsan:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0 # 采样的百分比
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://122.112.249.42:3307/cloud_order?useUnicode=true&characterEncoding=utf-8&useSSL=false
