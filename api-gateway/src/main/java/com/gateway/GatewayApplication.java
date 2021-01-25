@@ -2,6 +2,7 @@ package com.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 但是我这里是想偷懒,不想把mybatis的依赖 在每一个子服务中写一份
  */
 @EnableDiscoveryClient
-@SpringBootApplication//(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class GatewayApplication {
 
     public static void main(String[] args){
