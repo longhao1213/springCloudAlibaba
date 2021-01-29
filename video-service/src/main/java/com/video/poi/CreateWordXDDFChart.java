@@ -38,16 +38,18 @@ public class CreateWordXDDFChart {
 	public static void main(String[] args) throws Exception {
 		try (XWPFDocument document = new XWPFDocument()) {
  
-			// create the data
+			// 创建源数据
+			// 底部数据栏
 			String[] categories = new String[] { "Lang 1", "Lang 2", "Lang 3" };
+			// 柱状图数据来源
 			Double[] valuesA = new Double[] { 10d, 20d, 30d };
 			Double[] valuesB = new Double[] { 15d, 25d, 35d };
 			Double[] valuesC = new Double[] { 10d, 8d, 20d };
  
-			// create the chart
+			// 创建一个柱状图
 			XWPFChart chart = document.createChart(15 * Units.EMU_PER_CENTIMETER, 10 * Units.EMU_PER_CENTIMETER);
  
-			// create data sources
+			// 处理对应的数据
 			int numOfPoints = categories.length;
 			String categoryDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, 0, 0));
 			String valuesDataRangeA = chart.formatRange(new CellRangeAddress(1, numOfPoints, 1, 1));
@@ -59,7 +61,7 @@ public class CreateWordXDDFChart {
 			XDDFNumericalDataSource<Double> valuesDataB = XDDFDataSourcesFactory.fromArray(valuesB, valuesDataRangeB, 2);
 			XDDFNumericalDataSource<Double> valuesDataC = XDDFDataSourcesFactory.fromArray(valuesC, valuesDataRangeC, 2);
 
-			// create axis
+			// 创建一些轴
 			XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
 			XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
 			leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
@@ -67,36 +69,27 @@ public class CreateWordXDDFChart {
 			// Else first and last category is exactly on cross points and the bars are only half visible.
 			leftAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
  
-			// create chart data
+			// 创建柱状图的类型
 			XDDFChartData data = chart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
 			// 指定为堆叠柱状图
 			((XDDFBarChartData) data).setBarGrouping(BarGrouping.STACKED);
 			((XDDFBarChartData) data).setBarDirection(BarDirection.COL);
 
-			// create series
+			// 创建每一个柱子上的类容 若有多个 循环添加
 			// if only one series do not vary colors for each bar
 			((XDDFBarChartData) data).setVaryColors(true);
 			XDDFChartData.Series series = data.addSeries(categoriesData, valuesDataA);
 			XDDFChartData.Series series2 = data.addSeries(categoriesData, valuesDataB);
 			XDDFChartData.Series series3 = data.addSeries(categoriesData, valuesDataC);
-			// XDDFChart.setSheetTitle is buggy. It creates a Table but only half way and incomplete.
-			// Excel cannot opening the workbook after creatingg that incomplete Table. 
-			// So updating the chart data in Word is not possible.
-			//series.setTitle("a", chart.setSheetTitle("a", 1));
 			series.setTitle("a", setTitleInDataSheet(chart, "a", 1));
 			series2.setTitle("b", setTitleInDataSheet(chart, "b", 2));
 			series3.setTitle("c", setTitleInDataSheet(chart, "c", 3));
  
-			/*
-			   // if more than one series do vary colors of the series
-			   ((XDDFBarChartData)data).setVaryColors(true);
-			   series = data.addSeries(categoriesData, valuesDataB);
-			   //series.setTitle("b", chart.setSheetTitle("b", 2));
-			   series.setTitle("b", setTitleInDataSheet(chart, "b", 2));
-			*/
- 
+
 			// plot chart data
+			// 设置同一个柱子上的图形偏移量为0
 			chart.getCTChart().getPlotArea().getBarChartArray(0).addNewOverlap().setVal((byte) 100);
+			// 绘制图形数据
 			chart.plot(data);
  
 			// create legend
