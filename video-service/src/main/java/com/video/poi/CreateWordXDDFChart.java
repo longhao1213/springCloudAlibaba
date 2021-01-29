@@ -29,7 +29,12 @@ public class CreateWordXDDFChart {
 		cell.setCellValue(title);
 		return new CellReference(sheet.getSheetName(), 0, column, true, true);
 	}
- 
+
+	/**
+	 * 绘制堆叠柱状图
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		try (XWPFDocument document = new XWPFDocument()) {
  
@@ -37,6 +42,7 @@ public class CreateWordXDDFChart {
 			String[] categories = new String[] { "Lang 1", "Lang 2", "Lang 3" };
 			Double[] valuesA = new Double[] { 10d, 20d, 30d };
 			Double[] valuesB = new Double[] { 15d, 25d, 35d };
+			Double[] valuesC = new Double[] { 10d, 8d, 20d };
  
 			// create the chart
 			XWPFChart chart = document.createChart(15 * Units.EMU_PER_CENTIMETER, 10 * Units.EMU_PER_CENTIMETER);
@@ -46,10 +52,13 @@ public class CreateWordXDDFChart {
 			String categoryDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, 0, 0));
 			String valuesDataRangeA = chart.formatRange(new CellRangeAddress(1, numOfPoints, 1, 1));
 			String valuesDataRangeB = chart.formatRange(new CellRangeAddress(1, numOfPoints, 2, 2));
+			String valuesDataRangeC = chart.formatRange(new CellRangeAddress(1, numOfPoints, 2, 2));
 			XDDFDataSource<String> categoriesData = XDDFDataSourcesFactory.fromArray(categories, categoryDataRange, 0);
+
 			XDDFNumericalDataSource<Double> valuesDataA = XDDFDataSourcesFactory.fromArray(valuesA, valuesDataRangeA, 1);
 			XDDFNumericalDataSource<Double> valuesDataB = XDDFDataSourcesFactory.fromArray(valuesB, valuesDataRangeB, 2);
- 
+			XDDFNumericalDataSource<Double> valuesDataC = XDDFDataSourcesFactory.fromArray(valuesC, valuesDataRangeC, 2);
+
 			// create axis
 			XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
 			XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
@@ -60,18 +69,23 @@ public class CreateWordXDDFChart {
  
 			// create chart data
 			XDDFChartData data = chart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
-			((XDDFBarChartData) data).setBarDirection(BarDirection.COL);
 			// 指定为堆叠柱状图
 			((XDDFBarChartData) data).setBarGrouping(BarGrouping.STACKED);
+			((XDDFBarChartData) data).setBarDirection(BarDirection.COL);
+
 			// create series
 			// if only one series do not vary colors for each bar
-			((XDDFBarChartData) data).setVaryColors(false);
+			((XDDFBarChartData) data).setVaryColors(true);
 			XDDFChartData.Series series = data.addSeries(categoriesData, valuesDataA);
-			// XDDFChart.setSheetTitle is buggy. It creates a Table but only half way and incomplete. 
+			XDDFChartData.Series series2 = data.addSeries(categoriesData, valuesDataB);
+			XDDFChartData.Series series3 = data.addSeries(categoriesData, valuesDataC);
+			// XDDFChart.setSheetTitle is buggy. It creates a Table but only half way and incomplete.
 			// Excel cannot opening the workbook after creatingg that incomplete Table. 
 			// So updating the chart data in Word is not possible.
 			//series.setTitle("a", chart.setSheetTitle("a", 1));
 			series.setTitle("a", setTitleInDataSheet(chart, "a", 1));
+			series2.setTitle("b", setTitleInDataSheet(chart, "b", 2));
+			series3.setTitle("c", setTitleInDataSheet(chart, "c", 3));
  
 			/*
 			   // if more than one series do vary colors of the series
@@ -82,6 +96,7 @@ public class CreateWordXDDFChart {
 			*/
  
 			// plot chart data
+			chart.getCTChart().getPlotArea().getBarChartArray(0).addNewOverlap().setVal((byte) 100);
 			chart.plot(data);
  
 			// create legend
