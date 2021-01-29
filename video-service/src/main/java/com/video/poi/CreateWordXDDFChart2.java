@@ -60,7 +60,7 @@ public class CreateWordXDDFChart2 {
 			XDDFLineChartData.Series series1 = (XDDFLineChartData.Series) data.addSeries(countries, area);
 			//折线图例标题
 			series1.setTitle("面积", null);
-			//直线
+			//是否弯曲
 			series1.setSmooth(false);
 			//设置标记大小
 			series1.setMarkerSize((short) 6);
