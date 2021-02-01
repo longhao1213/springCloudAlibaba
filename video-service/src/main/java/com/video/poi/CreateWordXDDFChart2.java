@@ -52,7 +52,8 @@ public class CreateWordXDDFChart2 {
  
 			//数据1，单元格范围位置[2, 0]到[2, 6]
 //			XDDFNumericalDataSource<Double> population = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(2, 2, 0, 6));
- 
+
+
 			//LINE：折线图，
 			XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
  
@@ -66,8 +67,6 @@ public class CreateWordXDDFChart2 {
 			series1.setMarkerSize((short) 6);
 			//设置标记样式，星星
 			series1.setMarkerStyle(MarkerStyle.STAR);
- 
- 
 			//绘制
 			chart.plot(data);
  
