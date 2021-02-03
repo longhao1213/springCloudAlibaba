@@ -1,9 +1,15 @@
 package com.video.poi;
 
 import org.apache.poi.util.Units;
+import org.apache.poi.xddf.usermodel.XDDFColor;
+import org.apache.poi.xddf.usermodel.XDDFShapeProperties;
+import org.apache.poi.xddf.usermodel.XDDFSolidFillProperties;
 import org.apache.poi.xddf.usermodel.chart.*;
 import org.apache.poi.xwpf.usermodel.XWPFChart;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTScatterSer;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTSRgbColor;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTShapeProperties;
 
 import java.io.FileOutputStream;
 
@@ -53,7 +59,15 @@ public class CreateWordXDDFChart5 {
 			//设置标记样式，星星
 			series1.setMarkerStyle(MarkerStyle.CIRCLE);
 			//绘制
+			byte[] color = new byte[] {(byte) 195, (byte) 224, (byte) 176};
 			chart.getCTChart().getPlotArea().getScatterChartArray(0).getSerArray(0).addNewSpPr().addNewLn().addNewNoFill();
+			XDDFSolidFillProperties fillMarker = new XDDFSolidFillProperties(XDDFColor.from(new byte[]{(byte)0xFF, (byte)0xFF, (byte)0x00}));
+//			XDDFSolidFillProperties fillMarker = new XDDFSolidFillProperties(XDDFColor.from(228, 225, 3));
+
+			XDDFShapeProperties propertiesMarker = new XDDFShapeProperties();
+			propertiesMarker.setFillProperties(fillMarker);
+			chart.getCTChart().getPlotArea().getScatterChartArray(0).getSerArray(0).getMarker()
+					.addNewSpPr().set(propertiesMarker.getXmlObject());
 			chart.plot(data);
  
 			try (FileOutputStream fileOut = new FileOutputStream("CreateWordXDDFChart.docx")) {
